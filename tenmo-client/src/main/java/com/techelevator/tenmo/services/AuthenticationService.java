@@ -48,19 +48,36 @@ public class AuthenticationService {
         return success;
     }
     // added
-    private double balance(Account account){
+    public double balance(){
+        Account account = new Account();
+        AuthenticatedUser user = new AuthenticatedUser();
+        String token = user.getToken();
+       HttpHeaders headers = new HttpHeaders();
+       headers.setContentType(MediaType.APPLICATION_JSON);
+       headers.setBearerAuth(token);
 
-        HttpEntity<Account> entity = new HttpEntity<>(account);
+        HttpEntity<Account> entity = new HttpEntity<>(account,headers);
+       try {
+           ResponseEntity<Account> response = restTemplate.exchange(baseUrl + "balance", HttpMethod.GET, entity, Account.class);
+           account= response.getBody();
+       } catch (RestClientResponseException | ResourceAccessException e) {
+           BasicLogger.log(e.getMessage());
+       }
+
+
 
 //    Double  balance= restTemplate.exchange(baseUrl + "/account/balance" ,HttpMethod.GET,entity,Double.class);
-       return account.getBalance();
+
+        return account.getBalance();
     }
 
     //"""""""
 
     private HttpEntity<UserCredentials> createCredentialsEntity(UserCredentials credentials) {
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
+
         return new HttpEntity<>(credentials, headers);
     }
 

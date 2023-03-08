@@ -88,7 +88,9 @@ public class App {
 
 	private void viewCurrentBalance() {
 		// TODO Auto-generated method stub
-        System.out.println(userService.getUserBalance());
+        double balance;
+        balance= authenticationService.balance();
+        System.out.println(balance);
 	}
 
 	private void viewTransferHistory() {

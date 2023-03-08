@@ -18,50 +18,50 @@ public class JdbcAccountDao implements AccountDao{
 
     //get the balance by account id
 
-    @Override
-    public BigDecimal getBalancebyId(int id) {
-        Account account= new Account();
-//        BigDecimal balance = new BigDecimal("0.00");
-
-        String sql = "SELECT balance FROM account" +
-                "WHERE account_id= ?;";
-
-        SqlRowSet resource = jdbcTemplate.queryForRowSet(sql,id);
-
-        while (resource.next()) {
-            String s= resource.getString("balance");
-            account.setBalance(new BigDecimal(s));
-        }
-        return account.getBalance();
-    }
+//    @Override
+//    public BigDecimal getBalancebyId(int id) {
+//        Account account= new Account();
+////        BigDecimal balance = new BigDecimal("0.00");
+//
+//        String sql = "SELECT balance FROM account" +
+//                "WHERE account_id= ?;";
+//
+//        SqlRowSet resource = jdbcTemplate.queryForRowSet(sql,id);
+//
+//        while (resource.next()) {
+//            String s= resource.getString("balance");
+//            account.setBalance(new BigDecimal(s));
+//        }
+//        return account.getBalance();
+//    }
 
 
 
     // get balance by user name
     @Override
-    public BigDecimal getBalance(String name){
+    public Account getBalance(String name){
         Account account= new Account();
         String sql = "SELECT balance FROM account a "+
                 "JOIN tenmo_user tu ON a.user_id = tu.user_id WHERE username = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, name);
         if(results.next()){
-            String s=  results.getString("balance");
-            account.setBalance(new BigDecimal(s));
+            double s=  results.getDouble("balance");
+            account.setBalance(s);
         }
-        return account.getBalance();
-    }
-
-
-    private Account mapRowToAccount(SqlRowSet rs) {
-        Account account = new Account();
-        account.setAccount_id(rs.getInt("account_id"));
-        account.setUser_id(rs.getInt("user_id"));
-
-        String accountBalance = rs.getString("balance");
-        account.setBalance(new BigDecimal(accountBalance));
-
         return account;
     }
+
+
+//    private Account mapRowToAccount(SqlRowSet rs) {
+//        Account account = new Account();
+//        account.setAccount_id(rs.getInt("account_id"));
+//        account.setUser_id(rs.getInt("user_id"));
+//
+//        String accountBalance = rs.getString("balance");
+//        account.setBalance(new BigDecimal(accountBalance));
+//
+//        return account;
+//    }
 
 
 }
