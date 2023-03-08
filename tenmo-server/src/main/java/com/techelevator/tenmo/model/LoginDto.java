@@ -10,6 +10,9 @@ public class LoginDto {
    private String username;
    private String password;
 
+
+
+
    public String getUsername() {
       return username;
    }
@@ -25,6 +28,9 @@ public class LoginDto {
    public void setPassword(String password) {
       this.password = password;
    }
+
+
+
 
    @Override
    public String toString() {

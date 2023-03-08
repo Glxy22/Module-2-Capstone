@@ -1,5 +1,6 @@
 package com.techelevator.tenmo.services;
 
+import com.techelevator.tenmo.model.Account;
 import com.techelevator.util.BasicLogger;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -46,10 +47,22 @@ public class AuthenticationService {
         }
         return success;
     }
+    // added
+    private double balance(Account account){
+
+        HttpEntity<Account> entity = new HttpEntity<>(account);
+
+//    Double  balance= restTemplate.exchange(baseUrl + "/account/balance" ,HttpMethod.GET,entity,Double.class);
+       return account.getBalance();
+    }
+
+    //"""""""
 
     private HttpEntity<UserCredentials> createCredentialsEntity(UserCredentials credentials) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         return new HttpEntity<>(credentials, headers);
     }
+
+
 }

@@ -96,6 +96,10 @@ public class JdbcUserDao implements UserDao {
         return true;
     }
 
+    // added
+
+    //-------
+
     private User mapRowToUser(SqlRowSet rs) {
         User user = new User();
         user.setId(rs.getInt("user_id"));
