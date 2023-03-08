@@ -49,16 +49,16 @@ public class Controller {
 
 //need to call jdbcAccount to get account info by id
 
-@RequestMapping(path="/account",method= RequestMethod.GET)
-       private Account getUserId(Principal principal) {
-        Account account;
-           String userString = principal.toString();
-           int startIndex = userString.indexOf("id=");
-           int endIndex = userString.indexOf(",", startIndex);
-           long l= Long.valueOf(userString.substring(startIndex + 3, endIndex));
-         return account= accountDao.getAccountByUserId(l);
-
-       }
+//@RequestMapping(path="/account",method= RequestMethod.GET)
+//       private Account getUserId(Principal principal) {
+//        Account account;
+//           String userString = principal.toString();
+//           int startIndex = userString.indexOf("id=");
+//           int endIndex = userString.indexOf(",", startIndex);
+//           long l= Long.valueOf(userString.substring(startIndex + 3, endIndex));
+//         return account= accountDao.getAccountByUserId(l);
+//
+//       }
     }
 
 

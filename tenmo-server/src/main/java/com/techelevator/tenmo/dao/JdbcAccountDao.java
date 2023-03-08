@@ -37,18 +37,18 @@ public class JdbcAccountDao implements AccountDao{
 
     //get account information by user id
 
-    @Override
-    public int getAccountByUserId(String username) {
-        String sql = "SELECT account_id FROM account a "+
-                "JOIN tenmo_user tu ON a.user_id = tu.user_id WHERE username = ?";
-        SqlRowSet resource = jdbcTemplate.queryForRowSet(sql, username);
-        Account account = null;
-        while (resource.next()) {
-            String s= resource.getString("account_id");
-            account.setAccount_id(Integer.parseInt(s));
-        }
-        return account.getAccount_id();
-    }
+//    @Override
+//    public long getAccountByUserId(int id) {
+//        String sql = "SELECT account_id FROM account a "+
+//                "JOIN tenmo_user tu ON a.user_id = tu.user_id WHERE username = ?";
+//        SqlRowSet resource = jdbcTemplate.queryForRowSet(sql, id);
+//        Account account = null;
+//        while (resource.next()) {
+//            String s= resource.getString("account_id");
+//            account.setAccount_id(Integer.parseInt(s));
+//        }
+//        return account.getAccount_id();
+//    }
 
     // get balance by user name
     @Override

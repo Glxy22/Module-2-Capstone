@@ -30,9 +30,9 @@ public class AccountController {
     }
 
     @RequestMapping(path = "/account", method = RequestMethod.GET)
-    public int getaccount(Principal principal) {
+    public BigDecimal getaccount(Principal principal) {
 
-        return accountDao.getAccountByUserId(principal.getName());
+        return accountDao.getBalance(principal.getName());
     }
 
 

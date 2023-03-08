@@ -9,5 +9,5 @@ import java.math.BigDecimal;
 public interface AccountDao {
     BigDecimal getBalance(int id);
     BigDecimal getBalance(String name);
-    Account getAccountByUserId(long userId);
+    //Long getAccountByUserId(int userId);
 }
