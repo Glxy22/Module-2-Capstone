@@ -33,5 +33,11 @@ public class UserService {
         return balance;
     }
 
+    private HttpEntity<UserCredentials> createCredentialsEntity(UserCredentials credentials) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return new HttpEntity<>(credentials, headers);
+    }
+
 
 }
