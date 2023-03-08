@@ -19,7 +19,7 @@ public class JdbcAccountDao implements AccountDao{
     //get the balance by account id
 
     @Override
-    public BigDecimal getBalance(int id) {
+    public BigDecimal getBalancebyId(int id) {
         Account account= new Account();
 //        BigDecimal balance = new BigDecimal("0.00");
 
@@ -28,27 +28,14 @@ public class JdbcAccountDao implements AccountDao{
 
         SqlRowSet resource = jdbcTemplate.queryForRowSet(sql,id);
 
-       while (resource.next()) {
+        while (resource.next()) {
             String s= resource.getString("balance");
             account.setBalance(new BigDecimal(s));
         }
         return account.getBalance();
-               }
+    }
 
-    //get account information by user id
 
-//    @Override
-//    public long getAccountByUserId(int id) {
-//        String sql = "SELECT account_id FROM account a "+
-//                "JOIN tenmo_user tu ON a.user_id = tu.user_id WHERE username = ?";
-//        SqlRowSet resource = jdbcTemplate.queryForRowSet(sql, id);
-//        Account account = null;
-//        while (resource.next()) {
-//            String s= resource.getString("account_id");
-//            account.setAccount_id(Integer.parseInt(s));
-//        }
-//        return account.getAccount_id();
-//    }
 
     // get balance by user name
     @Override
@@ -58,10 +45,10 @@ public class JdbcAccountDao implements AccountDao{
                 "JOIN tenmo_user tu ON a.user_id = tu.user_id WHERE username = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, name);
         if(results.next()){
-          String s=  results.getString("balance");
-          account.setBalance(new BigDecimal(s));
+            String s=  results.getString("balance");
+            account.setBalance(new BigDecimal(s));
         }
-    return account.getBalance();
+        return account.getBalance();
     }
 
 
@@ -78,7 +65,6 @@ public class JdbcAccountDao implements AccountDao{
 
 
 }
-
 
 
 

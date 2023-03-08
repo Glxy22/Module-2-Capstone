@@ -10,30 +10,21 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigDecimal;
 import java.security.Principal;
 
+//import static jdk.internal.org.jline.utils.Colors.s;
+
 @RestController
 public class AccountController {
- private AccountDao accountDao;
+    private AccountDao accountDao;
 
- public AccountController(AccountDao accountDao){
-     this.accountDao = accountDao;
- }
- @RequestMapping(path="/{id}/balance",method= RequestMethod.GET)
-    public BigDecimal getBalance(@PathVariable int id){
-    return accountDao.getBalance(id);
+    public AccountController(AccountDao accountDao) {
+        this.accountDao = accountDao;
+    }
 
- }
 
+    //get balance
     @RequestMapping(path = "/balance", method = RequestMethod.GET)
     public BigDecimal getBalance(Principal principal) {
-        System.out.println(principal.getName());
         return accountDao.getBalance(principal.getName());
     }
-
-    @RequestMapping(path = "/account", method = RequestMethod.GET)
-    public BigDecimal getaccount(Principal principal) {
-
-        return accountDao.getBalance(principal.getName());
-    }
-
 
 }
