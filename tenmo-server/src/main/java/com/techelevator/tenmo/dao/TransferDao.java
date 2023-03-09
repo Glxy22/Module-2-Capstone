@@ -7,9 +7,11 @@ import java.util.List;
 
 @Component
 public interface TransferDao {
-    public List<Transfer> transferHistory(int accountId);
+    public List<Transfer> transferHistory();
 
-    public Transfer viewTransfer(int transferId);
+    public List<Transfer> viewTransfer(String username);
 
-    public Transfer createTransfer(int type, int status, int from, int to, double amount);
+
+    public Integer createTransfer(Transfer transfer);
+    public void withdrawTransfer(int transferId);
 }

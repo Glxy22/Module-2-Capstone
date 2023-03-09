@@ -22,6 +22,7 @@ import com.techelevator.tenmo.model.User;
 import com.techelevator.tenmo.security.jwt.TokenProvider;
 import org.springframework.web.server.ResponseStatusException;
 
+
 /**
  * Controller to authenticate users.
  */
