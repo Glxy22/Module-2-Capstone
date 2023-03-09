@@ -56,7 +56,7 @@ public class AuthenticationService {
        headers.setContentType(MediaType.APPLICATION_JSON);
        headers.setBearerAuth(token);
 
-        HttpEntity<Account> entity = new HttpEntity<>(account,headers);
+        HttpEntity entity = new HttpEntity<>(user,headers);
        try {
            ResponseEntity<Account> response = restTemplate.exchange(baseUrl + "balance", HttpMethod.GET, entity, Account.class);
            account= response.getBody();
