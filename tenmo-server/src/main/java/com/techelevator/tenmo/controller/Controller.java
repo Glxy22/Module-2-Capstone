@@ -57,16 +57,19 @@ public class Controller {
 
     @RequestMapping(path = "/list_transaction", method = RequestMethod.GET)
     public List<Transfer> listTransfers(Principal principal) {
-       List<Transfer> transfers = null;
+        List<Transfer> transfers = null;
         transfers = transferDao.list_transfer_by_name(principal.getName());
 
-       return transfers;
+        return transfers;
     }
-   }
 
-//    @RequestMapping(path = "/withdrawTransfer", method = RequestMethod.PUT)
-//    public void withdrawTransfer(@RequestBody Transfer transfer){
-//
-//    }
 
+    @RequestMapping(path = "/withdrawTransfer/{id}", method = RequestMethod.PUT)
+    public void withdrawTransfer(@PathVariable int id) {
+        Transfer transfer1 = new Transfer();
+        double amount = 200;
+        Account account = null;
+        account = accountDao.withdrawBalance(id, amount);
+    }
+}
 

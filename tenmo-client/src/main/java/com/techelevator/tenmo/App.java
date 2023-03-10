@@ -101,12 +101,17 @@ public class App {
         Transfer[] transfers = null;
 
         transfers = accountService.list_transaction(currentUser);
-        System.out.println("no of transfers "+transfers.length);
+        System.out.println("------------------------------------------ ");
+        System.out.println("Transfers ");
+        System.out.println("ID           From/To                Amount ");
+        System.out.println("------------------------------------------ ");
         for (int i = 0; i < transfers.length ; i++) {
-            System.out.println(" can u work plzzzzz");
-                    System.out.println("transferID.... " + transfers[i].getTransfer_id() + " ACC from..... " + transfers[i].getAccount_from() +
+                    //get from and to names and refactor the string output to have consistent spacing
+                    System.out.println(transfers[i].getTransfer_id() + " ACC from..... " + transfers[i].getAccount_from() +
                     " Account to..... " + transfers[i].getAccount_to() + " Amount ..." + transfers[i].getAmount());
         }
+        System.out.println("Please enter transfer ID to view details (0 to cancel): ");
+        //get user input and if user input == 0, quit
     }
 
 	private void viewPendingRequests() {

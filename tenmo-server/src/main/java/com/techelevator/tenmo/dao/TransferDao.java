@@ -14,4 +14,8 @@ public interface TransferDao {
 
     public Integer createTransfer(Transfer transfer);
     public void withdrawTransfer(int transferId);
+
+    public void withdrawBalance(int transferId);
+
+
 }

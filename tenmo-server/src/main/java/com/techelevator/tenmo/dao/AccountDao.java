@@ -10,4 +10,5 @@ public interface AccountDao {
 //    BigDecimal getBalancebyId(int id);
     Account getBalance(String name);
 //    int getAccountByUserId(long userId);
+    public Account withdrawBalance(int account_id, double amount);
 }

@@ -56,10 +56,18 @@ public class JdbcTransferDao implements TransferDao{
         return transferId;
     }
 
-
     @Override
     public void withdrawTransfer(int transferId) {
 
+    }
+
+
+    @Override
+    public void withdrawBalance(int transferId) {
+        String sql = "";
+    }
+    public void depositBalance(int transferId) {
+        String sql = "";
     }
  public Transfer mapToTransfer(SqlRowSet rowSet){
         Transfer transfer = new Transfer();
