@@ -33,16 +33,17 @@ public class JdbcTransferDao implements TransferDao{
 
 
     @Override
-    public List<Transfer> viewTransfer(String username) {
-        List<Transfer> transfer = new ArrayList<>();
-        String sql = "SELECT * FROM tenmo_user t Join account a ON a.user_id = t.user_id " +
-                "JOIN transfer tr ON tr.account_to = a.account_id OR tr.account_from = a.account_id " +
+        public List<Transfer> list_transfer_by_name(String username) {
+        List<Transfer> transfers = new ArrayList<>();
+        String sql = "SELECT  transfer_id ,transfer_type_id, transfer_status_id, account_from, account_to, amount  FROM transfer tr " +
+                "JOIN account a ON tr.account_to = a.account_id OR tr.account_from = a.account_id " +
+                " JOiN tenmo_user tn on tn.user_id = a.user_id "+
                 "WHERE username LIKE ?;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, username);
         while(results.next()){
-            transfer.add(mapToTransfer(results));
+            transfers.add(mapToTransfer(results));
         }
-        return transfer;
+        return transfers;
     }
 
     @Override
@@ -52,31 +53,15 @@ public class JdbcTransferDao implements TransferDao{
 
         Integer transferId = jdbcTemplate.queryForObject(sql, Integer.class, transfer.getTransfer_type_id(), transfer.getTransfer_status_id(),
                 transfer.getAccount_from(), transfer.getAccount_to(), transfer.getAmount());
-
-//        String sqlGet = "SELECT transfer_id, amount FROM transfer WHERE transfer_id = ?;";
-//
-//        SqlRowSet results =  jdbcTemplate.queryForRowSet(sqlGet, transferId);
-//        if(results.next()){
-//            finalTransfer = mapToTransfer(results);
-//        }
         return transferId;
     }
+
 
     @Override
     public void withdrawTransfer(int transferId) {
 
     }
-
-//    @Override
-//    public void withdrawTransfer(int transferId) {
-//        String sql = "SELECT * FROM transfer WHERE transfer_id = ?;";
-//        SqlRowSet results = j
-//    }
-
-    //                "JOIN transfer_type ty ON ty.transfer_type_id = t.transfer_type_id" +
-//                "JOIN transfer_status ts ON ts.transfer_status_id = t.transfer_status_id" +
-//                "JOIN account a ON a.user_id = t.account_from OR a.user_id = t.account_to;";
-    public Transfer mapToTransfer(SqlRowSet rowSet){
+ public Transfer mapToTransfer(SqlRowSet rowSet){
         Transfer transfer = new Transfer();
         transfer.setId(rowSet.getInt("transfer_id"));
         transfer.setTransfer_type_id(rowSet.getInt("transfer_type_id"));
@@ -88,3 +73,22 @@ public class JdbcTransferDao implements TransferDao{
     }
 
 }
+
+
+//        String sqlGet = "SELECT transfer_id, amount FROM transfer WHERE transfer_id = ?;";
+//
+//        SqlRowSet results =  jdbcTemplate.queryForRowSet(sqlGet, transferId);
+//        if(results.next()){
+//            finalTransfer = mapToTransfer(results);
+//        }
+
+
+//    @Override
+//    public void withdrawTransfer(int transferId) {
+//        String sql = "SELECT * FROM transfer WHERE transfer_id = ?;";
+//        SqlRowSet results = j
+//    }
+
+//                "JOIN transfer_type ty ON ty.transfer_type_id = t.transfer_type_id" +
+//                "JOIN transfer_status ts ON ts.transfer_status_id = t.transfer_status_id" +
+//                "JOIN account a ON a.user_id = t.account_from OR a.user_id = t.account_to;";

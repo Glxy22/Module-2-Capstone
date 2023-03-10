@@ -52,16 +52,6 @@ public class JdbcAccountDao implements AccountDao{
     }
 
 
-//    private Account mapRowToAccount(SqlRowSet rs) {
-//        Account account = new Account();
-//        account.setAccount_id(rs.getInt("account_id"));
-//        account.setUser_id(rs.getInt("user_id"));
-//
-//        String accountBalance = rs.getString("balance");
-//        account.setBalance(new BigDecimal(accountBalance));
-//
-//        return account;
-//    }
 
 
 }

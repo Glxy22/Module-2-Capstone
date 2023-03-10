@@ -9,7 +9,7 @@ import java.util.List;
 public interface TransferDao {
     public List<Transfer> transferHistory();
 
-    public List<Transfer> viewTransfer(String username);
+    public List<Transfer> list_transfer_by_name(String username);
 
 
     public Integer createTransfer(Transfer transfer);

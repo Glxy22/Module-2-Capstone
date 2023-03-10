@@ -46,25 +46,27 @@ public class Controller {
         return user;
     }
 
+    // creating transfer request
     @RequestMapping(path = "/create_transfer", method = RequestMethod.POST)
     public Integer createTransfer(@RequestBody Transfer transfer) {
         Integer transferId = transferDao.createTransfer(transfer);
 
         return transferId;
     }
+//returning transaction for current user
 
     @RequestMapping(path = "/list_transaction", method = RequestMethod.GET)
-    public List<Transfer> listTransfers(Principal principal){
-        List<Transfer> transfers = null;
-        transfers = transferDao.viewTransfer(principal.getName());
+    public List<Transfer> listTransfers(Principal principal) {
+       List<Transfer> transfers = null;
+        transfers = transferDao.list_transfer_by_name(principal.getName());
 
-        return transfers;
+       return transfers;
     }
-
+   }
 
 //    @RequestMapping(path = "/withdrawTransfer", method = RequestMethod.PUT)
 //    public void withdrawTransfer(@RequestBody Transfer transfer){
 //
 //    }
-}
+
 
