@@ -7,4 +7,5 @@ import com.techelevator.tenmo.model.Transfer;
 public interface AccountService {
     Account getBalance(AuthenticatedUser authenticatedUser);
     public Transfer[] list_transaction(AuthenticatedUser authenticatedUser);
+    public Account approveTransferFunds(AuthenticatedUser authenticatedUser,Transfer transfer);
 }

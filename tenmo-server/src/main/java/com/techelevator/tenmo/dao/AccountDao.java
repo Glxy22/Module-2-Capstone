@@ -1,6 +1,7 @@
 package com.techelevator.tenmo.dao;
 
 import com.techelevator.tenmo.model.Account;
+import com.techelevator.tenmo.model.Transfer;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -10,5 +11,8 @@ public interface AccountDao {
 //    BigDecimal getBalancebyId(int id);
     Account getBalance(String name);
 //    int getAccountByUserId(long userId);
-    public Account withdrawBalance(int account_id, double amount);
+//    public Account withdrawBalance(int account_id, double amount);
+    //transfer amount and adjust the balance accordingly
+    public void transferFunds(Transfer transfer);
+    public Account getAccountById(int id);
 }

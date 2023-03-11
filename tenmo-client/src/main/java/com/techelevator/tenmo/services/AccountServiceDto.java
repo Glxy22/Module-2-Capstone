@@ -3,10 +3,7 @@ package com.techelevator.tenmo.services;
 import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.AuthenticatedUser;
 import com.techelevator.tenmo.model.Transfer;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
@@ -65,6 +62,26 @@ public class AccountServiceDto implements AccountService{
         return transfer;
     }
 
+    //create transfer
+
+//    @Override
+//    public Transfer  createTransfer()
+
+        //transfer approved ???????????? how to handel the call in API
+    @Override
+     public Account approveTransferFunds(AuthenticatedUser authenticatedUser,Transfer transfer){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(authenticatedUser.getToken());
+        HttpEntity<Transfer> entity = new HttpEntity(transfer, headers);
+ int id= authenticatedUser.getUser().getId();
+
+        restTemplate.exchange(baseUrl+"/transfer_approved",HttpMethod.PUT,entity,Transfer.class);
+
+      Account account=  restTemplate.exchange(baseUrl+"/transfer_approved/"+id,HttpMethod.GET,entity,Account.class).getBody();
+
+  return account;
+    }
 
 
 //    @Override

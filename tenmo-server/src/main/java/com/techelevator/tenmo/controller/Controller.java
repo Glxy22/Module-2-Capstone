@@ -47,12 +47,15 @@ public class Controller {
     }
 
     // creating transfer request
+    @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/create_transfer", method = RequestMethod.POST)
-    public Integer createTransfer(@RequestBody Transfer transfer) {
-        Integer transferId = transferDao.createTransfer(transfer);
+    public int createTransfer(@RequestBody Transfer transfer) {
+        int transfer_id = transferDao.createTransfer(transfer);
 
-        return transferId;
+        return transfer_id;
     }
+
+
 //returning transaction for current user
 
     @RequestMapping(path = "/list_transaction", method = RequestMethod.GET)
@@ -64,12 +67,12 @@ public class Controller {
     }
 
 
-    @RequestMapping(path = "/withdrawTransfer/{id}", method = RequestMethod.PUT)
-    public void withdrawTransfer(@PathVariable int id) {
-        Transfer transfer1 = new Transfer();
-        double amount = 200;
-        Account account = null;
-        account = accountDao.withdrawBalance(id, amount);
-    }
+//    @RequestMapping(path = "/withdrawTransfer/{id}", method = RequestMethod.PUT)
+//    public void withdrawTransfer(@PathVariable int id) {
+//        Transfer transfer1 = new Transfer();
+//        double amount = 200;
+//        Account account = null;
+//        account = accountDao.withdrawBalance(id, amount);
+//    }
 }
 

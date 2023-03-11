@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 @Component
@@ -46,15 +47,19 @@ public class JdbcTransferDao implements TransferDao{
         return transfers;
     }
 
+
     @Override
-    public Integer createTransfer(Transfer transfer) {
+    public int createTransfer(Transfer transfer) {
 
-        String sql = "INSERT INTO transfer ( transfer_type_id, transfer_status_id, account_from, account_to, amount ) VALUES ( ?,?,?,?,? ) RETURNING transfer_id;";
+        String sql = "INSERT INTO transfer (transfer_type_id, transfer_status_id, account_from, account_to, amount ) VALUES (?,?,?,?,? );";
 
-        Integer transferId = jdbcTemplate.queryForObject(sql, Integer.class, transfer.getTransfer_type_id(), transfer.getTransfer_status_id(),
+         jdbcTemplate.update(sql,transfer.getTransfer_type_id(), transfer.getTransfer_status_id(),
                 transfer.getAccount_from(), transfer.getAccount_to(), transfer.getAmount());
-        return transferId;
+            return transfer.getTransfer_id();
     }
+
+
+
 
     @Override
     public void withdrawTransfer(int transferId) {
@@ -81,6 +86,8 @@ public class JdbcTransferDao implements TransferDao{
     }
 
 }
+
+
 
 
 //        String sqlGet = "SELECT transfer_id, amount FROM transfer WHERE transfer_id = ?;";

@@ -11,8 +11,7 @@ public interface TransferDao {
 
     public List<Transfer> list_transfer_by_name(String username);
 
-
-    public Integer createTransfer(Transfer transfer);
+    public int createTransfer(Transfer transfer);
     public void withdrawTransfer(int transferId);
 
     public void withdrawBalance(int transferId);

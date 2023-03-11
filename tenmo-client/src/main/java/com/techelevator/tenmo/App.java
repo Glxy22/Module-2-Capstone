@@ -1,12 +1,7 @@
 package com.techelevator.tenmo;
 
-import com.techelevator.tenmo.model.Account;
-import com.techelevator.tenmo.model.AuthenticatedUser;
-import com.techelevator.tenmo.model.Transfer;
-import com.techelevator.tenmo.model.UserCredentials;
+import com.techelevator.tenmo.model.*;
 import com.techelevator.tenmo.services.*;
-
-import java.util.List;
 
 public class App {
 
@@ -14,10 +9,11 @@ public class App {
 
     private final ConsoleService consoleService = new ConsoleService();
     private final AuthenticationService authenticationService = new AuthenticationService(API_BASE_URL);
-    private final UserService userService = new UserService(API_BASE_URL);
+    private final UserServiceDto userService = new UserServiceDto(API_BASE_URL);
     //added on 3/8
     private AccountService accountService= new AccountServiceDto(API_BASE_URL);;
     private AuthenticatedUser currentUser;
+
 
     public static void main(String[] args) {
         App app = new App();
@@ -121,7 +117,26 @@ public class App {
 
 	private void sendBucks() {
 		// TODO Auto-generated method stub
-		
+        //not complete ?????????????
+        User[] users= null;
+        System.out.println("_______________________");
+        System.out.println("USERS");
+        System.out.println("ID"+"                "+"Name");
+        System.out.println("________________________");
+        users=userService.getAllUsers(currentUser);
+        for(User user:users){
+            System.out.println(user.getId()+"              "+user.getUsername());
+        }
+
+
+        System.out.println("________________________");
+
+        Transfer transfer= new Transfer( 5,1,2001,2003,230.00);
+//        int x= consoleService.promptForMenuSelection("Enter the amount to transfer: ");
+//        transfer.setAmount((double)x);
+        Account account;
+	     account= accountService.approveTransferFunds(currentUser,transfer);
+        System.out.println(account.getAccount_id() +"   "+ account.getBalance()+">>>>>>>>>");
 	}
 
 	private void requestBucks() {
