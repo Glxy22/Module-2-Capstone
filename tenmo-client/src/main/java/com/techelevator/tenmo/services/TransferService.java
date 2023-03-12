@@ -1,5 +1,8 @@
 package com.techelevator.tenmo.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.techelevator.tenmo.model.AuthenticatedUser;
 import com.techelevator.tenmo.model.Transfer;
 import com.techelevator.tenmo.model.UserCredentials;
 import com.techelevator.util.BasicLogger;
@@ -20,22 +23,41 @@ public class TransferService {
         this.baseUrl = url;
     }
 
-    public boolean pendingTransferStatusChange(Transfer transfer){
-        HttpEntity<Transfer> entity = createTransferEntity(transfer);
-        boolean success = false;
+    public Transfer getTransfer(AuthenticatedUser authenticatedUser, Transfer transfer){
+        HttpEntity<Transfer> entity = createTransferEntity(authenticatedUser, transfer);
+
         try{
-            restTemplate.exchange(baseUrl + "/pending_transfer_status_change", HttpMethod.PUT, entity, Void.class);
-            success = true;
+            String serializedTransferObject = new ObjectMapper().writeValueAsString(transfer);
+            restTemplate.put(baseUrl + "/pending_transfer_status_change", entity);
+
         }catch (RestClientResponseException | ResourceAccessException e) {
             BasicLogger.log(e.getMessage());
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return transfer;
+    }
+
+    public boolean pendingTransferStatusChange(AuthenticatedUser authenticatedUser, Transfer transfer){
+        HttpEntity<Transfer> entity = createTransferEntity(authenticatedUser, transfer);
+        boolean success = false;
+        try{
+            String serializedTransferObject = new ObjectMapper().writeValueAsString(transfer);
+            restTemplate.put(baseUrl + "/pending_transfer_status_change", entity);
+            success = true;
+
+        }catch (RestClientResponseException | ResourceAccessException e) {
+            BasicLogger.log(e.getMessage());
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
         return success;
     }
-    private HttpEntity<Transfer> createTransferEntity(Transfer transfer) {
+    private HttpEntity<Transfer> createTransferEntity(AuthenticatedUser authenticatedUser, Transfer transfer) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-
+        headers.setBearerAuth(authenticatedUser.getToken());
         return new HttpEntity<>(transfer, headers);
     }
 

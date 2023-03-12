@@ -39,12 +39,12 @@ public class Transfer {
         this.transfer_type_id = transfer_type_id;
     }
 
-    public int getTransfer__status_id() {
+    public int getTransfer_status_id() {
         return transfer_status_id;
     }
 
-    public void setTransfer__status_id(int transfer__status_id) {
-        this.transfer_status_id = transfer__status_id;
+    public void setTransfer_status_id(int transfer_status_id) {
+        this.transfer_status_id = transfer_status_id;
     }
 
     public int getAccount_from() {

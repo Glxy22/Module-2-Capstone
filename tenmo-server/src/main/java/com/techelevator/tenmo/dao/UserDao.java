@@ -15,5 +15,6 @@ public interface UserDao {
     int findIdByUsername(String username);
 
     boolean create(String username, String password);
+    public User getUserByAccountId(int accountId);
 //    double balance(String userName);
 }

@@ -33,6 +33,17 @@ public class UserServiceDto implements UserService {
         }
         return balance;
     }
+    public User getUserById (AuthenticatedUser authenticatedUser, int id ){
+        User user = null;
+        try {
+            ResponseEntity<User> response =
+                    restTemplate.exchange(API_BASE_URL + "/user/" + id, HttpMethod.GET, createHttpEntity(authenticatedUser), User.class);
+            user = response.getBody();
+        } catch (RestClientResponseException | ResourceAccessException e) {
+            BasicLogger.log(e.getMessage());
+        }
+        return user;
+    }
 
     public User[] getAllUsers(AuthenticatedUser authenticatedUser) {
         HttpEntity entity = createHttpEntity(authenticatedUser);

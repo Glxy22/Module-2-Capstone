@@ -107,8 +107,28 @@ public class App {
                     System.out.println(transfers[i].getTransfer_id() + " ACC from..... " + transfers[i].getAccount_from() +
                     " Account to..... " + transfers[i].getAccount_to() + " Amount ..." + transfers[i].getAmount());
         }
-        System.out.println("Please enter transfer ID to view details (0 to cancel): ");
         //get user input and if user input == 0, quit
+        int transferId = consoleService.promptForViewingDetailsOfTransfer();
+        boolean contains = false;
+        if(transferId != 0){
+            for (int i = 0; i < transfers.length; i++){
+                if(transfers[i].getTransfer_id() == transferId) {
+                    System.out.println();
+                    System.out.println("------------------------------------------ ");
+                    System.out.println("Transfer Details ");
+                    System.out.println("------------------------------------------ ");
+                    System.out.println("Id: " + transfers[i].getTransfer_id());
+                    System.out.println("From: " + userService.getUserById(currentUser, transfers[i].getAccount_from()) );
+                    System.out.println("To: " + userService.getUserById(currentUser, transfers[i].getAccount_to()));
+                    System.out.println("Type: " + transfers[i].getTransfer_type_id());
+                    System.out.println("Status: " + transfers[i].getTransfer_status_id());
+                    System.out.println("Amount: " + transfers[i].getAmount());
+                    System.out.println();
+                }
+            }
+        } else{
+            System.out.println("Invalid Selection");
+        }
     }
 
 	private void viewPendingRequests() {
@@ -129,34 +149,23 @@ public class App {
         //get user input and if user input == 0, quit, else edit data
         int transferId = consoleService.promptForPendingRequestsIdRequest();
         boolean contains = false;
-        if(transferId == 0){
-
-        } else {
+        if(transferId != 0){
             for (int i = 0; i < transfers.length; i++){
                 if(transfers[i].getTransfer_id() == transferId) {
                     contains = true;
                     //save transfer here so we can send to server later
                     int transferStatusId = consoleService.promptForPendingTransferMenuARD();
                     if(transferStatusId >= 0 && transferStatusId <= 2){
-                        transfers[i].setTransfer__status_id(transferStatusId + 1);
+                        transfers[i].setTransfer_status_id(transferStatusId + 1);
                         Transfer transfer = transfers[i];
-                        System.out.println("cliend id" + transfers[i].getTransfer_id());
-                        System.out.println("cliend status id" + transfers[i].getTransfer__status_id());
-
-                        transferService.pendingTransferStatusChange(transfer);
+                        transferService.pendingTransferStatusChange(currentUser, transfer);
                     }
                     else{
                         System.out.println("Invalid Selection");
                     }
-
                 }
             }
         }
-
-        //currentUser = authenticationService.login(transferId);
-//        if (currentUser == null) {
-//            consoleService.printErrorMessage();
-//        }
 
 	}
 

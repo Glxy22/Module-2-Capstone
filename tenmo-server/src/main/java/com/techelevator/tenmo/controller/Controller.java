@@ -8,6 +8,7 @@ import com.techelevator.tenmo.model.Transfer;
 import com.techelevator.tenmo.model.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -73,10 +74,19 @@ public class Controller {
     }
 
     @RequestMapping(path = "/pending_transfer_status_change", method = RequestMethod.PUT)
-    public void changeTransferStatus(Transfer transfer){
-        System.out.println("SERVER TRANSFER ID:"+ transfer.getTransfer_id());
-        System.out.println("SERVER STATUS ID:"+ transfer.getTransfer_status_id());
+    public void changeTransferStatus(@RequestBody Transfer transfer){
+
         transferDao.changeTransferStatus(transfer);
+    }
+
+    @RequestMapping(path = "/user")
+    public User getUsernameById(){
+        User user = userDao.getUserByAccountId(2001);
+        if(user == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user Not Found");
+        } else {
+        return user;
+        }
     }
 //    @RequestMapping(path = "/withdrawTransfer/{id}", method = RequestMethod.PUT)
 //    public void withdrawTransfer(@PathVariable int id) {

@@ -52,6 +52,10 @@ public class ConsoleService {
         String password = promptForString("Password: ");
         return new UserCredentials(username, password);
     }
+    public int promptForViewingDetailsOfTransfer(){
+        int transferId = promptForInt("Please enter transfer ID to view details (0 to cancel): ");
+        return transferId;
+    }
 
     public int promptForPendingRequestsIdRequest(){
         int transferId = promptForInt("Please enter transfer ID to approve/reject (0 to cancel): ");
