@@ -45,6 +45,7 @@ public class UserServiceDto implements UserService {
         return user.getUsername();
     }
 
+
     public User[] getAllUsers(AuthenticatedUser authenticatedUser) {
         HttpEntity entity = createHttpEntity(authenticatedUser);
         User[] users = null;

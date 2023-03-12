@@ -181,7 +181,7 @@ public class App {
         System.out.println("________________________");
         users = userService.getAllUsers(currentUser);
         for (User user : users) {
-            int account_id = accountService.getAccountByUserId(currentUser, user.getId()).getAccount_id();
+            int account_id = accountService.getAccountByUserId(currentUser, user.getId());
             System.out.println(account_id + "              " + user.getUsername());
         }
 
@@ -193,10 +193,10 @@ public class App {
         Transfer transfer = new Transfer();
         Account account = null;
 
-       account= accountService.getAccountByUserId(currentUser, currentUser.getUser().getId());
-        int account_from = accountService.getAccountByUserId(currentUser, currentUser.getUser().getId()).getAccount_id();
+//       account= accountService.getAccountByUserId(currentUser, currentUser.getUser().getId());
+        int account_from = accountService.getAccountByUserId(currentUser, currentUser.getUser().getId());
         int account_to_choice = consoleService.promptForInt("Enter the receiver's account no: ");
-        int account_to = accountService.getAccountByUserId(currentUser, account_to_choice).getAccount_id();
+        int account_to = accountService.getAccountByAccountID(currentUser, account_to_choice);
 
 
         double amount = consoleService.promptForDouble("Enter the amount: ");
@@ -208,7 +208,7 @@ public class App {
         transfer.setAmount(amount);
 
         int transfer_id = accountService.createTransfer(currentUser, transfer);
-        System.out.println(currentUser.getUser().getUsername() + " has sent " + transfer.getAmount() + " to ??" + transfer.getAccount_to() + " account");
+        System.out.println(currentUser.getUser().getUsername().toUpperCase() + " has sent $" + transfer.getAmount() + " to account #" + transfer.getAccount_to());
     }
 
 

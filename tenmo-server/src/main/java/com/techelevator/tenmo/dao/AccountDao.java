@@ -16,5 +16,7 @@ public interface AccountDao {
     public void transferFunds(Transfer transfer);
     public Account getAccountById(int id);
     public Account getAccountByUserID(int userId);
+    public Account  getAccountByAccountID(int account_Id);
+
 
 }

@@ -31,30 +31,39 @@ public class AccountController {
 
     //transfer amount and adjust balance accordingly.......working
 
-    @RequestMapping(path="/transfer_approved", method=RequestMethod.PUT)
-    public void approveTransferFunds(@RequestBody Transfer transfer){
+    @RequestMapping(path = "/transfer_approved", method = RequestMethod.PUT)
+    public void approveTransferFunds(@RequestBody Transfer transfer) {
 
         accountDao.transferFunds(transfer);
 
     }
 
-    @RequestMapping(path="/transfer_approved/{id}", method=RequestMethod.GET)
-    public Account getAccountById(@PathVariable int id){
+    @RequestMapping(path = "/transfer_approved/{id}", method = RequestMethod.GET)
+    public Account getAccountById(@PathVariable int id) {
         Account account;
-        account= accountDao.getAccountById(id);
+        account = accountDao.getAccountById(id);
         return account;
 
     }
 
-    @RequestMapping(path="/account_id/{id}", method=RequestMethod.GET)
-    public Account getAccountToById(@PathVariable int id){
+    @RequestMapping(path = "/account_id/{id}", method = RequestMethod.GET)
+    public Account getAccountToById(@PathVariable int id) {
         Account account;
-        account= accountDao.getAccountByUserID(id);
+        account = accountDao.getAccountByUserID(id);
         System.out.println(account.getAccount_id());
         return account;
 
     }
 
+    @RequestMapping(path = "/account_with_acc_id/{id}", method = RequestMethod.GET)
+    public Account getAccountByAccountID(@PathVariable int id) {
+        Account account;
+        account = accountDao.getAccountByAccountID(id);
+        System.out.println(account.getAccount_id());
+        return account;
+
+    }
+}
 
 
 
@@ -70,4 +79,4 @@ public class AccountController {
 //
 //    }
 
-}
+

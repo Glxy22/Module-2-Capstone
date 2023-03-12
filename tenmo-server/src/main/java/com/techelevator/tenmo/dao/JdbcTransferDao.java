@@ -63,13 +63,13 @@ public class JdbcTransferDao implements TransferDao{
 
 
     @Override
-    public int createTransfer(Transfer transfer) {
+    public Transfer createTransfer(Transfer transfer) {
 
         String sql = "INSERT INTO transfer (transfer_type_id, transfer_status_id, account_from, account_to, amount ) VALUES (?,?,?,?,? );";
 
          jdbcTemplate.update(sql,transfer.getTransfer_type_id(), transfer.getTransfer_status_id(),
                 transfer.getAccount_from(), transfer.getAccount_to(), transfer.getAmount());
-            return transfer.getTransfer_id();
+            return transfer;
     }
     @Override
     public void changeTransferStatus(Transfer transfer){

@@ -50,10 +50,12 @@ public class Controller {
     // creating transfer request
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/create_transfer", method = RequestMethod.POST)
-    public int createTransfer(@RequestBody Transfer transfer) {
-        int transfer_id = transferDao.createTransfer(transfer);
+    public Transfer createTransfer(@RequestBody Transfer transfer) {
+        Transfer transfer1=null;
+        transfer1= transferDao.createTransfer(transfer);
 
-        return transfer_id;
+        System.out.println(transfer.getTransfer_id());
+        return transfer1;
     }
     @RequestMapping(path = "/view_pending_requests", method = RequestMethod.GET)
     public List<Transfer> viewPendingRequests(Principal principal) {

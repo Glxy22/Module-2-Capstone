@@ -3,6 +3,8 @@ package com.techelevator.tenmo.services;
 import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.AuthenticatedUser;
 import com.techelevator.tenmo.model.Transfer;
+import com.techelevator.tenmo.model.User;
+import com.techelevator.util.BasicLogger;
 import org.springframework.http.*;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;
@@ -97,7 +99,7 @@ public class AccountServiceDto implements AccountService{
     }
 
     @Override
-    public Account getAccountByUserId(AuthenticatedUser authenticatedUser,int id) {
+    public int getAccountByUserId(AuthenticatedUser authenticatedUser,int id) {
         HttpEntity<Account> entity = createHttpEntity(authenticatedUser);
         Account account = null;
         try{
@@ -109,8 +111,24 @@ public class AccountServiceDto implements AccountService{
         } catch(ResourceAccessException e) {
             System.out.println("Could not complete request due to server network issue. Please try again.");
         }
-//        System.out.println(account.getAccount_id()+" account id is ");
-        return account;
+
+        return account.getAccount_id();
+    }
+
+    public int getAccountByAccountID(AuthenticatedUser authenticatedUser, int id ){
+        HttpEntity<Account> entity = createHttpEntity(authenticatedUser);
+        Account account = null;
+        try{
+            ResponseEntity<Account> response = restTemplate.exchange(baseUrl+"/account_with_acc_id/"+id,HttpMethod.GET,entity,Account.class);
+            account= response.getBody();
+        }
+        catch(RestClientResponseException e) {
+            System.out.println("Could not complete request. Code: " + e.getRawStatusCode());
+        } catch(ResourceAccessException e) {
+            System.out.println("Could not complete request due to server network issue. Please try again.");
+        }
+
+        return account.getAccount_id();
     }
 
     @Override
@@ -118,7 +136,7 @@ public class AccountServiceDto implements AccountService{
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(authenticatedUser.getToken());
-        HttpEntity<Transfer> entity = new HttpEntity(transfer, headers);
+        HttpEntity<Transfer> entity = new HttpEntity<>(transfer,headers);
         int id = authenticatedUser.getUser().getId();
 
         Transfer transfer1 = restTemplate.exchange(baseUrl + "/create_transfer", HttpMethod.POST, entity, Transfer.class).getBody();
