@@ -226,8 +226,24 @@ public class App {
         System.out.println(currentUser.getUser().getId()+"         From: "+currentUser.getUser().getUsername().toUpperCase()+
                 "       "+accountService.getBalance(currentUser).getBalance());
         name_to=userService.getUserByAccountID(currentUser,account_to);
-        System.out.println(name_to.getId()+"           To: "+name_to.getUsername().toUpperCase()+"        "
+        System.out.println(name_to.getId()+"           To: "+name_to.getUsername().toUpperCase()+"         "
                 +accountService.getAccToByAccountID(currentUser,account_to).getBalance());
+
+        //transaction details
+        System.out.println("\n\n");
+        String choice= consoleService.promptForString("Do you want to check the Transaction Detail (y) or (n)");
+
+        if(choice.equalsIgnoreCase("y")) {
+            System.out.println("_________________________________________");
+            System.out.println("Transfer Details");
+            System.out.println("_________________________________________");
+            System.out.println("id: " + currentUser.getUser().getId());
+            System.out.println("From: " + currentUser.getUser().getUsername().toUpperCase());
+            System.out.println("To: " + name_to.getUsername().toUpperCase());
+            System.out.println("Type: Send");
+            System.out.println("Status: Approved");
+            System.out.println("Amount: " + accountService.getBalance(currentUser).getBalance());
+        }
 
     }
 

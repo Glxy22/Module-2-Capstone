@@ -7,7 +7,6 @@ import com.techelevator.tenmo.model.UserCredentials;
 import java.math.BigDecimal;
 
 public interface UserService {
-    public User[] getAllUsers(AuthenticatedUser authenticatedUser);
+    User[] getAllUsers(AuthenticatedUser authenticatedUser);
     User getUserByAccountID(AuthenticatedUser authenticatedUser, int id );
-//    BigDecimal getUserBalancebyid(AuthenticatedUser authenticatedUser);  //  not a working method
 }

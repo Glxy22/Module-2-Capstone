@@ -123,38 +123,9 @@ public class JdbcAccountDao implements AccountDao{
     }
 
 
-    //get the balance by account id
-
-//    @Override
-//    public BigDecimal getBalancebyId(int id) {
-//        Account account= new Account();
-////        BigDecimal balance = new BigDecimal("0.00");
-//
-//        String sql = "SELECT balance FROM account" +
-//                "WHERE account_id= ?;";
-//
-//        SqlRowSet resource = jdbcTemplate.queryForRowSet(sql,id);
-//
-//        while (resource.next()) {
-//            String s= resource.getString("balance");
-//            account.setBalance(new BigDecimal(s));
-//        }
-//        return account.getBalance();
+//   public Transfer transferDetails(int id){
+//        String sql= "select tr"
 //    }
-
-//    @Override
-//    public Account withdrawBalance(int account_id, double amount){
-//        Account account = new Account();
-//        String sql = "UPDATE account SET balance = ? WHERE account_id = ?;";
-//        SqlRowSet results = jdbcTemplate.queryForRowSet(sql,double.class, amount, account_id);
-//        if(results.next()){
-//           account = mapToAccount(results);
-//           account.setBalance(account.getBalance() - amount);
-//        }
-//
-//        return  account;
-//    }
-
 
 
 }
