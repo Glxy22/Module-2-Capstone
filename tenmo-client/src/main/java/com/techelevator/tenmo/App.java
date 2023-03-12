@@ -201,14 +201,19 @@ public class App {
 
         double amount = consoleService.promptForDouble("Enter the amount: ");
 
-        transfer.setTransfer_type_id(2);
-        transfer.setTransfer_status_id(1);
-        transfer.setAccount_from(account_from);
-        transfer.setAccount_to(account_to);
-        transfer.setAmount(amount);
+        if (account_to == account_from) {
+            System.out.println("Please enter the right account number!");
+        } else {
 
-        int transfer_id = accountService.createTransfer(currentUser, transfer);
-        System.out.println(currentUser.getUser().getUsername().toUpperCase() + " has sent $" + transfer.getAmount() + " to account #" + transfer.getAccount_to());
+            transfer.setTransfer_type_id(2);
+            transfer.setTransfer_status_id(1);
+            transfer.setAccount_from(account_from);
+            transfer.setAccount_to(account_to);
+            transfer.setAmount(amount);
+
+            int transfer_id = accountService.createTransfer(currentUser, transfer);
+            System.out.println(currentUser.getUser().getUsername().toUpperCase() + " has sent $" + transfer.getAmount() + " to account #" + transfer.getAccount_to());
+        }
     }
 
 
