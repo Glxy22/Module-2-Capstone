@@ -50,15 +50,31 @@ public class AccountServiceDto implements AccountService{
                     baseUrl + "/list_transaction", HttpMethod.GET,entity, Transfer[].class);
 
             transfer = responseEntity.getBody();
-            System.out.println("Response status code: " + responseEntity.getStatusCodeValue()); // Debug statement
-//            Transfer[] transfer = responseEntity.getBody();
-            System.out.println("Number of transfers: " + transfer.length); // Debug statement
+
         } catch(RestClientResponseException e) {
             System.out.println("Could not complete request. Code: " + e.getRawStatusCode());
         } catch(ResourceAccessException e) {
             System.out.println("Could not complete request due to server network issue. Please try again.");
         }
-        System.out.println("transfer length "+ transfer.length);
+
+        return transfer;
+    }
+    @Override
+    public Transfer[] list_pending_requests(AuthenticatedUser authenticatedUser) {
+        HttpEntity entity = createHttpEntity(authenticatedUser);
+        Transfer[] transfer = new Transfer[0];
+        try {
+            ResponseEntity<Transfer[]> responseEntity = restTemplate.exchange(
+                    baseUrl + "/view_pending_requests", HttpMethod.GET,entity, Transfer[].class);
+
+            transfer = responseEntity.getBody();
+
+        } catch(RestClientResponseException e) {
+            System.out.println("Could not complete request. Code: " + e.getRawStatusCode());
+        } catch(ResourceAccessException e) {
+            System.out.println("Could not complete request due to server network issue. Please try again.");
+        }
+
         return transfer;
     }
 

@@ -12,6 +12,7 @@ public class App {
     private final UserServiceDto userService = new UserServiceDto(API_BASE_URL);
     //added on 3/8
     private AccountService accountService= new AccountServiceDto(API_BASE_URL);;
+    private TransferService transferService = new TransferService(API_BASE_URL);
     private AuthenticatedUser currentUser;
 
 
@@ -112,7 +113,51 @@ public class App {
 
 	private void viewPendingRequests() {
 		// TODO Auto-generated method stub
-		
+        Transfer[] transfers = null;
+
+        transfers = accountService.list_pending_requests(currentUser);
+        System.out.println("------------------------------------------ ");
+        System.out.println("Pending Transfers ");
+        System.out.println("ID           To                     Amount ");
+        System.out.println("------------------------------------------ ");
+        for (int i = 0; i < transfers.length ; i++) {
+            //get from and to names and refactor the string output to have consistent spacing
+            System.out.println(transfers[i].getTransfer_id() + " ACC from..... " + transfers[i].getAccount_from() +
+                    " Account to..... " + transfers[i].getAccount_to() + " Amount ..." + transfers[i].getAmount());
+        }
+        System.out.println("-------------");
+        //get user input and if user input == 0, quit, else edit data
+        int transferId = consoleService.promptForPendingRequestsIdRequest();
+        boolean contains = false;
+        if(transferId == 0){
+
+        } else {
+            for (int i = 0; i < transfers.length; i++){
+                if(transfers[i].getTransfer_id() == transferId) {
+                    contains = true;
+                    //save transfer here so we can send to server later
+                    int transferStatusId = consoleService.promptForPendingTransferMenuARD();
+                    if(transferStatusId >= 0 && transferStatusId <= 2){
+                        transfers[i].setTransfer__status_id(transferStatusId + 1);
+                        Transfer transfer = transfers[i];
+                        System.out.println("cliend id" + transfers[i].getTransfer_id());
+                        System.out.println("cliend status id" + transfers[i].getTransfer__status_id());
+
+                        transferService.pendingTransferStatusChange(transfer);
+                    }
+                    else{
+                        System.out.println("Invalid Selection");
+                    }
+
+                }
+            }
+        }
+
+        //currentUser = authenticationService.login(transferId);
+//        if (currentUser == null) {
+//            consoleService.printErrorMessage();
+//        }
+
 	}
 
 	private void sendBucks() {
@@ -131,7 +176,7 @@ public class App {
 
         System.out.println("________________________");
 
-        Transfer transfer= new Transfer( 5,1,2001,2003,230.00);
+        Transfer transfer= new Transfer( 58394,5,1,2001,2003,230.00);
 //        int x= consoleService.promptForMenuSelection("Enter the amount to transfer: ");
 //        transfer.setAmount((double)x);
         Account account;

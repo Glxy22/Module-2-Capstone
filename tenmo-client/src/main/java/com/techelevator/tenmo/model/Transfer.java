@@ -10,7 +10,11 @@ public class Transfer {
     private int account_to;
     private double amount;
 
-    public Transfer(int transfer_type_id,int transfer_status_id,
+    public Transfer(){
+
+    }
+
+    public Transfer(int transfer_id, int transfer_type_id,int transfer_status_id,
                     int account_from,int account_to,double amount){
         this.transfer_id=transfer_id;
         this.transfer_type_id = transfer_type_id;

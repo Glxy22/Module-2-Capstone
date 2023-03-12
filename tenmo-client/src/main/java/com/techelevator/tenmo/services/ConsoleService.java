@@ -5,6 +5,7 @@ import com.techelevator.tenmo.model.UserCredentials;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
+import java.util.SortedMap;
 
 public class ConsoleService {
 
@@ -52,6 +53,19 @@ public class ConsoleService {
         return new UserCredentials(username, password);
     }
 
+    public int promptForPendingRequestsIdRequest(){
+        int transferId = promptForInt("Please enter transfer ID to approve/reject (0 to cancel): ");
+        return transferId;
+    }
+    public int promptForPendingTransferMenuARD(){
+        System.out.println();
+        System.out.println("1: Approve");
+        System.out.println("2: Reject");
+        System.out.println("0: Don't approve or reject");
+        System.out.println();
+        int transferStatusId = promptForInt("Please choose an option: ");
+        return transferStatusId;
+    }
     public String promptForString(String prompt) {
         System.out.print(prompt);
         return scanner.nextLine();

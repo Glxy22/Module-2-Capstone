@@ -38,8 +38,22 @@ public class JdbcTransferDao implements TransferDao{
         List<Transfer> transfers = new ArrayList<>();
         String sql = "SELECT  transfer_id ,transfer_type_id, transfer_status_id, account_from, account_to, amount  FROM transfer tr " +
                 "JOIN account a ON tr.account_to = a.account_id OR tr.account_from = a.account_id " +
-                " JOiN tenmo_user tn on tn.user_id = a.user_id "+
+                "JOiN tenmo_user tn on tn.user_id = a.user_id "+
                 "WHERE username LIKE ?;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, username);
+        while(results.next()){
+            transfers.add(mapToTransfer(results));
+        }
+        return transfers;
+    }
+
+    @Override
+    public List<Transfer> list_pending_transfer(String username) {
+        List<Transfer> transfers = new ArrayList<>();
+        String sql = "SELECT  transfer_id ,transfer_type_id, transfer_status_id, account_from, account_to, amount  FROM transfer tr " +
+                "JOIN account a ON tr.account_to = a.account_id OR tr.account_from = a.account_id " +
+                "JOiN tenmo_user tn on tn.user_id = a.user_id "+
+                "WHERE username LIKE ? AND transfer_status_id = 1;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, username);
         while(results.next()){
             transfers.add(mapToTransfer(results));
@@ -57,8 +71,11 @@ public class JdbcTransferDao implements TransferDao{
                 transfer.getAccount_from(), transfer.getAccount_to(), transfer.getAmount());
             return transfer.getTransfer_id();
     }
-
-
+    @Override
+    public void changeTransferStatus(Transfer transfer){
+        String sql = "UPDATE transfer SET transfer_status_id = ? WHERE transfer_id = ?;";
+        jdbcTemplate.update(sql, 2, 3010);
+    }
 
 
     @Override

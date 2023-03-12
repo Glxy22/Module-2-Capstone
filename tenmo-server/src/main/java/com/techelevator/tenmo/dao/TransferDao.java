@@ -15,6 +15,7 @@ public interface TransferDao {
     public void withdrawTransfer(int transferId);
 
     public void withdrawBalance(int transferId);
-
+    public List<Transfer> list_pending_transfer(String username);
+    public void changeTransferStatus(Transfer transfer);
 
 }

@@ -54,7 +54,13 @@ public class Controller {
 
         return transfer_id;
     }
+    @RequestMapping(path = "/view_pending_requests", method = RequestMethod.GET)
+    public List<Transfer> viewPendingRequests(Principal principal) {
+        List<Transfer> transfers = null;
+        transfers = transferDao.list_pending_transfer(principal.getName());
 
+        return transfers;
+    }
 
 //returning transaction for current user
 
@@ -66,7 +72,12 @@ public class Controller {
         return transfers;
     }
 
-
+    @RequestMapping(path = "/pending_transfer_status_change", method = RequestMethod.PUT)
+    public void changeTransferStatus(Transfer transfer){
+        System.out.println("SERVER TRANSFER ID:"+ transfer.getTransfer_id());
+        System.out.println("SERVER STATUS ID:"+ transfer.getTransfer_status_id());
+        transferDao.changeTransferStatus(transfer);
+    }
 //    @RequestMapping(path = "/withdrawTransfer/{id}", method = RequestMethod.PUT)
 //    public void withdrawTransfer(@PathVariable int id) {
 //        Transfer transfer1 = new Transfer();
