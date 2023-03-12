@@ -15,4 +15,6 @@ public interface AccountDao {
     //transfer amount and adjust the balance accordingly
     public void transferFunds(Transfer transfer);
     public Account getAccountById(int id);
+    public Account getAccountByUserID(int userId);
+
 }

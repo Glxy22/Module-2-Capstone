@@ -9,4 +9,6 @@ public interface AccountService {
     public Transfer[] list_transaction(AuthenticatedUser authenticatedUser);
     public Account approveTransferFunds(AuthenticatedUser authenticatedUser,Transfer transfer);
     public Transfer[] list_pending_requests(AuthenticatedUser authenticatedUser);
+    Account getAccountByUserId(AuthenticatedUser authenticatedUser,int id);
+    int createTransfer(AuthenticatedUser authenticatedUser,Transfer transfer);
 }

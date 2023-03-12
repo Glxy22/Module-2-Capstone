@@ -97,6 +97,18 @@ public class ConsoleService {
         }
     }
 
+    public double promptForDouble(String prompt) {
+        System.out.print(prompt);
+        while (true) {
+            try {
+                double d = 0.0;
+                return d = Double.parseDouble(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a decimal number.");
+            }
+        }
+    }
+
     public void pause() {
         System.out.println("\nPress Enter to continue...");
         scanner.nextLine();

@@ -78,10 +78,7 @@ public class AccountServiceDto implements AccountService{
         return transfer;
     }
 
-    //create transfer
 
-//    @Override
-//    public Transfer  createTransfer()
 
         //transfer approved ???????????? how to handel the call in API
     @Override
@@ -99,25 +96,37 @@ public class AccountServiceDto implements AccountService{
   return account;
     }
 
+    @Override
+    public Account getAccountByUserId(AuthenticatedUser authenticatedUser,int id) {
+        HttpEntity<Account> entity = createHttpEntity(authenticatedUser);
+        Account account = null;
+        try{
+        ResponseEntity<Account> response = restTemplate.exchange(baseUrl+"/account_id/"+id,HttpMethod.GET,entity,Account.class);
+        account= response.getBody();
+        }
+        catch(RestClientResponseException e) {
+            System.out.println("Could not complete request. Code: " + e.getRawStatusCode());
+        } catch(ResourceAccessException e) {
+            System.out.println("Could not complete request due to server network issue. Please try again.");
+        }
+//        System.out.println(account.getAccount_id()+" account id is ");
+        return account;
+    }
 
-//    @Override
-//    public Transfer[] list_transaction(AuthenticatedUser authenticatedUser) {
-//        HttpEntity entity = createHttpEntity(authenticatedUser);
-//        Transfer[] transfer = null;
-//
-//        try {
-//            ResponseEntity<Transfer[]> response = restTemplate.exchange(baseUrl + "/list_transaction", HttpMethod.GET,
-//                    entity, Transfer[].class).getBody();
-//        } catch(RestClientResponseException e) {
-//            System.out.println("Could not complete request. Code: " + e.getRawStatusCode());
-//        } catch(ResourceAccessException e) {
-//            System.out.println("Could not complete request due to server network issue. Please try again.");
-//        }
-//
-//        return transfer;
-//    }
-//
-//
+    @Override
+    public int createTransfer(AuthenticatedUser authenticatedUser,Transfer transfer) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(authenticatedUser.getToken());
+        HttpEntity<Transfer> entity = new HttpEntity(transfer, headers);
+        int id = authenticatedUser.getUser().getId();
+
+        Transfer transfer1 = restTemplate.exchange(baseUrl + "/create_transfer", HttpMethod.POST, entity, Transfer.class).getBody();
+
+        return  transfer1.getTransfer_id();
+    }
+
+
     private HttpEntity createHttpEntity(AuthenticatedUser authenticatedUser) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setBearerAuth(authenticatedUser.getToken());

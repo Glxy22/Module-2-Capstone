@@ -26,7 +26,7 @@ public class UserServiceDto implements UserService {
 
         try {
             ResponseEntity<BigDecimal> response =
-                    restTemplate.getForEntity(API_BASE_URL + "/balance", BigDecimal.class);
+                    restTemplate.getForEntity(API_BASE_URL +"/balance", BigDecimal.class);
             balance = response.getBody();
         } catch (RestClientResponseException | ResourceAccessException e) {
             BasicLogger.log(e.getMessage());
@@ -37,7 +37,7 @@ public class UserServiceDto implements UserService {
         User user = null;
         try {
             ResponseEntity<User> response =
-                    restTemplate.exchange(API_BASE_URL + "/user_account/" + id, HttpMethod.GET, createHttpEntity(authenticatedUser), User.class);
+                    restTemplate.exchange(API_BASE_URL + "/user_account/"+id, HttpMethod.GET, createHttpEntity(authenticatedUser), User.class);
             user = response.getBody();
         } catch (RestClientResponseException | ResourceAccessException e) {
             BasicLogger.log(e.getMessage());

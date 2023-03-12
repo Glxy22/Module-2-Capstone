@@ -11,7 +11,8 @@ public class App {
     private final AuthenticationService authenticationService = new AuthenticationService(API_BASE_URL);
     private final UserServiceDto userService = new UserServiceDto(API_BASE_URL);
     //added on 3/8
-    private AccountService accountService= new AccountServiceDto(API_BASE_URL);;
+    private AccountService accountService = new AccountServiceDto(API_BASE_URL);
+    ;
     private TransferService transferService = new TransferService(API_BASE_URL);
     private AuthenticatedUser currentUser;
 
@@ -28,6 +29,7 @@ public class App {
             mainMenu();
         }
     }
+
     private void loginMenu() {
         int menuSelection = -1;
         while (menuSelection != 0 && currentUser == null) {
@@ -86,14 +88,14 @@ public class App {
         }
     }
 
-	private void viewCurrentBalance() {
-		// TODO Auto-generated method stub
+    private void viewCurrentBalance() {
+        // TODO Auto-generated method stub
         Account balance = accountService.getBalance(currentUser);
         System.out.println("Your current account balance is:  $" + balance.getBalance());
 
     }
 
-	private void viewTransferHistory() {
+    private void viewTransferHistory() {
         // TODO Auto-generated method stub
         Transfer[] transfers = null;
 
@@ -102,23 +104,23 @@ public class App {
         System.out.println("Transfers ");
         System.out.println("ID           From/To                Amount ");
         System.out.println("------------------------------------------ ");
-        for (int i = 0; i < transfers.length ; i++) {
-                    //get from and to names and refactor the string output to have consistent spacing
-                    System.out.println(transfers[i].getTransfer_id() + " ACC from..... " + transfers[i].getAccount_from() +
+        for (int i = 0; i < transfers.length; i++) {
+            //get from and to names and refactor the string output to have consistent spacing
+            System.out.println(transfers[i].getTransfer_id() + " ACC from..... " + transfers[i].getAccount_from() +
                     " Account to..... " + transfers[i].getAccount_to() + " Amount ..." + transfers[i].getAmount());
         }
         //get user input and if user input == 0, quit
         int transferId = consoleService.promptForViewingDetailsOfTransfer();
         boolean contains = false;
-        if(transferId != 0){
-            for (int i = 0; i < transfers.length; i++){
-                if(transfers[i].getTransfer_id() == transferId) {
+        if (transferId != 0) {
+            for (int i = 0; i < transfers.length; i++) {
+                if (transfers[i].getTransfer_id() == transferId) {
                     System.out.println();
                     System.out.println("------------------------------------------ ");
                     System.out.println("Transfer Details ");
                     System.out.println("------------------------------------------ ");
                     System.out.println("Id: " + transfers[i].getTransfer_id());
-                    System.out.println("From: " + userService.getUserById(currentUser, transfers[i].getAccount_from()) );
+                    System.out.println("From: " + userService.getUserById(currentUser, transfers[i].getAccount_from()));
                     System.out.println("To: " + userService.getUserById(currentUser, transfers[i].getAccount_to()));
                     System.out.println("Type: " + transfers[i].getTransfer_type_id());
                     System.out.println("Status: " + transfers[i].getTransfer_status_id());
@@ -126,13 +128,13 @@ public class App {
                     System.out.println();
                 }
             }
-        } else{
+        } else {
             System.out.println("Invalid Selection");
         }
     }
 
-	private void viewPendingRequests() {
-		// TODO Auto-generated method stub
+    private void viewPendingRequests() {
+        // TODO Auto-generated method stub
         Transfer[] transfers = null;
 
         transfers = accountService.list_pending_requests(currentUser);
@@ -140,7 +142,7 @@ public class App {
         System.out.println("Pending Transfers ");
         System.out.println("ID           To                     Amount ");
         System.out.println("------------------------------------------ ");
-        for (int i = 0; i < transfers.length ; i++) {
+        for (int i = 0; i < transfers.length; i++) {
             //get from and to names and refactor the string output to have consistent spacing
             System.out.println(transfers[i].getTransfer_id() + " ACC from..... " + transfers[i].getAccount_from() +
                     " Account to..... " + transfers[i].getAccount_to() + " Amount ..." + transfers[i].getAmount());
@@ -149,49 +151,66 @@ public class App {
         //get user input and if user input == 0, quit, else edit data
         int transferId = consoleService.promptForPendingRequestsIdRequest();
         boolean contains = false;
-        if(transferId != 0){
-            for (int i = 0; i < transfers.length; i++){
-                if(transfers[i].getTransfer_id() == transferId) {
+        if (transferId != 0) {
+            for (int i = 0; i < transfers.length; i++) {
+                if (transfers[i].getTransfer_id() == transferId) {
                     contains = true;
                     //save transfer here so we can send to server later
                     int transferStatusId = consoleService.promptForPendingTransferMenuARD();
-                    if(transferStatusId >= 0 && transferStatusId <= 2){
+                    if (transferStatusId >= 0 && transferStatusId <= 2) {
                         transfers[i].setTransfer_status_id(transferStatusId + 1);
                         Transfer transfer = transfers[i];
                         transferService.pendingTransferStatusChange(currentUser, transfer);
-                    }
-                    else{
+                    } else {
                         System.out.println("Invalid Selection");
                     }
                 }
             }
         }
 
-	}
+    }
 
-	private void sendBucks() {
-		// TODO Auto-generated method stub
+    private void sendBucks() {
+        // TODO Auto-generated method stub
         //not complete ?????????????
-        User[] users= null;
+        User[] users = null;
+
         System.out.println("_______________________");
         System.out.println("USERS");
-        System.out.println("ID"+"                "+"Name");
+        System.out.println("ID" + "                " + "Name");
         System.out.println("________________________");
-        users=userService.getAllUsers(currentUser);
-        for(User user:users){
-            System.out.println(user.getId()+"              "+user.getUsername());
+        users = userService.getAllUsers(currentUser);
+        for (User user : users) {
+            int account_id = accountService.getAccountByUserId(currentUser, user.getId()).getAccount_id();
+            System.out.println(account_id + "              " + user.getUsername());
         }
 
 
         System.out.println("________________________");
 
-        Transfer transfer= new Transfer( 58394,5,1,2001,2003,230.00);
-//        int x= consoleService.promptForMenuSelection("Enter the amount to transfer: ");
-//        transfer.setAmount((double)x);
-        Account account;
-	     account= accountService.approveTransferFunds(currentUser,transfer);
-        System.out.println(account.getAccount_id() +"   "+ account.getBalance()+">>>>>>>>>");
-	}
+
+        //create new transfer
+        Transfer transfer = new Transfer();
+        Account account = null;
+
+       account= accountService.getAccountByUserId(currentUser, currentUser.getUser().getId());
+        int account_from = accountService.getAccountByUserId(currentUser, currentUser.getUser().getId()).getAccount_id();
+        int account_to_choice = consoleService.promptForInt("Enter the receiver's account no: ");
+        int account_to = accountService.getAccountByUserId(currentUser, account_to_choice).getAccount_id();
+
+
+        double amount = consoleService.promptForDouble("Enter the amount: ");
+
+        transfer.setTransfer_type_id(2);
+        transfer.setTransfer_status_id(1);
+        transfer.setAccount_from(account_from);
+        transfer.setAccount_to(account_to);
+        transfer.setAmount(amount);
+
+        int transfer_id = accountService.createTransfer(currentUser, transfer);
+        System.out.println(currentUser.getUser().getUsername() + " has sent " + transfer.getAmount() + " to ??" + transfer.getAccount_to() + " account");
+    }
+
 
 	private void requestBucks() {
 		// TODO Auto-generated method stub

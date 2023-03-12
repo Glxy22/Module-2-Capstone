@@ -32,6 +32,16 @@ public class JdbcAccountDao implements AccountDao{
         return account;
     }
 
+    @Override
+    public Account getAccountByUserID(int userId) {
+        String sql = "SELECT account_id, user_id, balance FROM account WHERE user_id = ?";
+        SqlRowSet result = jdbcTemplate.queryForRowSet(sql, userId);
+        Account account = null;
+        if(result.next()) {
+            account = mapToAccount(result);
+        }
+        return account;
+    }
     // get balance by user name
     @Override
     public Account getBalance(String name){
@@ -95,7 +105,7 @@ public class JdbcAccountDao implements AccountDao{
         Account account = new Account();
         account.setAccount_id(rowSet.getInt("account_id"));
         account.setUser_id(rowSet.getInt("user_id"));
-        account.setBalance(rowSet.getInt("balance"));
+        account.setBalance(rowSet.getDouble("balance"));
         return account;
     }
 
