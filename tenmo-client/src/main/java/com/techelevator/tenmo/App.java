@@ -174,6 +174,7 @@ public class App {
         // TODO Auto-generated method stub
         //not complete ?????????????
         User[] users = null;
+        User name_to = null;
 
         System.out.println("_______________________");
         System.out.println("USERS");
@@ -214,6 +215,20 @@ public class App {
             int transfer_id = accountService.createTransfer(currentUser, transfer);
             System.out.println(currentUser.getUser().getUsername().toUpperCase() + " has sent $" + transfer.getAmount() + " to account #" + transfer.getAccount_to());
         }
+
+        //balance adjustments
+
+
+        System.out.println("_________________________________________");
+        System.out.println("Transfers");
+        System.out.println("ID"+"      "+"From/To"+"      "+"Amount");
+        System.out.println("_________________________________________");
+        System.out.println(currentUser.getUser().getId()+"         From: "+currentUser.getUser().getUsername().toUpperCase()+
+                "       "+accountService.getBalance(currentUser).getBalance());
+        name_to=userService.getUserByAccountID(currentUser,account_to);
+        System.out.println(name_to.getId()+"           To: "+name_to.getUsername().toUpperCase()+"        "
+                +accountService.getAccToByAccountID(currentUser,account_to).getBalance());
+
     }
 
 

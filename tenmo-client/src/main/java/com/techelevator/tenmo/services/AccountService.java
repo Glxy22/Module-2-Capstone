@@ -12,4 +12,5 @@ public interface AccountService {
     int getAccountByUserId(AuthenticatedUser authenticatedUser,int id);
     int createTransfer(AuthenticatedUser authenticatedUser,Transfer transfer);
     int getAccountByAccountID(AuthenticatedUser authenticatedUser, int id );
+    Account getAccToByAccountID(AuthenticatedUser authenticatedUser, int id );
 }

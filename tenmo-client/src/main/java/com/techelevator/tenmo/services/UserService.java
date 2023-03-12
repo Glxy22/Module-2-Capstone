@@ -8,5 +8,6 @@ import java.math.BigDecimal;
 
 public interface UserService {
     public User[] getAllUsers(AuthenticatedUser authenticatedUser);
-    BigDecimal getUserBalancebyid(AuthenticatedUser authenticatedUser);  //  not a working method
+    User getUserByAccountID(AuthenticatedUser authenticatedUser, int id );
+//    BigDecimal getUserBalancebyid(AuthenticatedUser authenticatedUser);  //  not a working method
 }

@@ -1,5 +1,6 @@
 package com.techelevator.tenmo.services;
 
+import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.AuthenticatedUser;
 import com.techelevator.tenmo.model.User;
 import com.techelevator.tenmo.model.UserCredentials;
@@ -59,6 +60,22 @@ public class UserServiceDto implements UserService {
         return users;
 
     }
+    public User getUserByAccountID(AuthenticatedUser authenticatedUser, int id ){
+        HttpEntity<User> entity = createHttpEntity(authenticatedUser);
+       User user = null;
+        try{
+            ResponseEntity<User> response = restTemplate.exchange(API_BASE_URL+"/user_account/"+id,HttpMethod.GET,entity,User.class);
+            user= response.getBody();
+        }
+        catch(RestClientResponseException e) {
+            System.out.println("Could not complete request. Code: " + e.getRawStatusCode());
+        } catch(ResourceAccessException e) {
+            System.out.println("Could not complete request due to server network issue. Please try again.");
+        }
+
+        return user;
+    }
+
 
     private HttpEntity createHttpEntity(AuthenticatedUser authenticatedUser) {
         HttpHeaders httpHeaders = new HttpHeaders();

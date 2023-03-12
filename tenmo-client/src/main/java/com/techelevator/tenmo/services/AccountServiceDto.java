@@ -131,6 +131,22 @@ public class AccountServiceDto implements AccountService{
         return account.getAccount_id();
     }
 
+    public Account getAccToByAccountID(AuthenticatedUser authenticatedUser, int id ){
+        HttpEntity<Account> entity = createHttpEntity(authenticatedUser);
+        Account account = null;
+        try{
+            ResponseEntity<Account> response = restTemplate.exchange(baseUrl+"/account_with_acc_id/"+id,HttpMethod.GET,entity,Account.class);
+            account= response.getBody();
+        }
+        catch(RestClientResponseException e) {
+            System.out.println("Could not complete request. Code: " + e.getRawStatusCode());
+        } catch(ResourceAccessException e) {
+            System.out.println("Could not complete request due to server network issue. Please try again.");
+        }
+
+        return account;
+    }
+
     @Override
     public int createTransfer(AuthenticatedUser authenticatedUser,Transfer transfer) {
         HttpHeaders headers = new HttpHeaders();
