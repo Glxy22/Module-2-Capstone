@@ -84,18 +84,17 @@ public class AccountServiceDto implements AccountService{
 
         //transfer approved ???????????? how to handel the call in API
     @Override
-     public Account approveTransferFunds(AuthenticatedUser authenticatedUser,Transfer transfer){
+     public void balanceAdjustmentAfterTransfer(AuthenticatedUser authenticatedUser,Transfer transfer){
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(authenticatedUser.getToken());
-        HttpEntity<Transfer> entity = new HttpEntity(transfer, headers);
- int id= authenticatedUser.getUser().getId();
+        HttpEntity<Transfer> entity = new HttpEntity<>(transfer,headers);
+
 
         restTemplate.exchange(baseUrl+"/transfer_approved",HttpMethod.PUT,entity,Transfer.class);
 
-      Account account=  restTemplate.exchange(baseUrl+"/transfer_approved/"+id,HttpMethod.GET,entity,Account.class).getBody();
+//          restTemplate.exchange(baseUrl+"/transfer_approved/",HttpMethod.PUT,entity,Transfer.class).getBody();
 
-  return account;
     }
 
     @Override

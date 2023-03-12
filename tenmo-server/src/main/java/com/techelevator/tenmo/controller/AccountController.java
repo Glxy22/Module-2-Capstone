@@ -32,7 +32,7 @@ public class AccountController {
     //transfer amount and adjust balance accordingly.......working
 
     @RequestMapping(path = "/transfer_approved", method = RequestMethod.PUT)
-    public void approveTransferFunds(@RequestBody Transfer transfer) {
+    public void balanceAdjustmentAfterTransfer(@RequestBody Transfer transfer) {
 
         accountDao.transferFunds(transfer);
 

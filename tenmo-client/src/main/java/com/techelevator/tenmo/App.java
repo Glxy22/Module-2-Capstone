@@ -218,7 +218,7 @@ public class App {
 
         //balance adjustments
 
-
+        accountService.balanceAdjustmentAfterTransfer(currentUser,transfer);
         System.out.println("_________________________________________");
         System.out.println("Transfers");
         System.out.println("ID"+"      "+"From/To"+"      "+"Amount");
