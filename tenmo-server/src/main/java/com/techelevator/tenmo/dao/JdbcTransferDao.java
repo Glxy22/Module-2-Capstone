@@ -2,6 +2,8 @@ package com.techelevator.tenmo.dao;
 
 import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.Transfer;
+import com.techelevator.tenmo.model.Transfer_Type;
+import com.techelevator.tenmo.model.Transfer_status;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -75,6 +77,30 @@ public class JdbcTransferDao implements TransferDao{
     public void changeTransferStatus(Transfer transfer){
         String sql = "UPDATE transfer SET transfer_status_id = ? WHERE transfer_id = ?;";
         jdbcTemplate.update(sql, transfer.getTransfer_status_id(), transfer.getTransfer_id());
+    }
+    @Override
+    public Transfer_Type getTransferTypeWithTransferTypeId(Transfer transfer) {
+        Transfer_Type transfer_type = new Transfer_Type();
+        String sql = "SELECT transfer_type_id, transfer_type_desc FROM transfer_type WHERE transfer_type_id = ?;";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, transfer.getTransfer_type_id());
+        if(results.next()){
+            transfer_type.setTransfer_type_id(results.getInt("transfer_type_id"));
+            transfer_type.setTransfer_type_desc(results.getString("transfer_type_desc"));
+        }
+        return transfer_type;
+    }
+    @Override
+    public Transfer_status getTransferStatusWithTransferTypeId(Transfer transfer) {
+        Transfer_status transfer_status = new Transfer_status();
+        String sql = "SELECT transfer_status_id, transfer_status_desc FROM transfer_status WHERE transfer_status_id = ?;";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, transfer.getTransfer_status_id());
+        if(results.next()){
+            transfer_status.setTransfer_status_id(results.getInt("transfer_status_id"));
+            transfer_status.setTransfer_status_desc(results.getString("transfer_status_desc"));
+        }
+        return transfer_status;
     }
 
 

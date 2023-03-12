@@ -1,11 +1,10 @@
 package com.techelevator.tenmo.controller;
 
 import com.techelevator.tenmo.dao.AccountDao;
+import com.techelevator.tenmo.dao.JdbcTransferDao;
 import com.techelevator.tenmo.dao.TransferDao;
 import com.techelevator.tenmo.dao.UserDao;
-import com.techelevator.tenmo.model.Account;
-import com.techelevator.tenmo.model.Transfer;
-import com.techelevator.tenmo.model.User;
+import com.techelevator.tenmo.model.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -89,6 +88,26 @@ public class Controller {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user Not Found");
         } else {
         return user;
+        }
+    }
+    @RequestMapping(path = "/transfer_type", method = RequestMethod.POST)
+    public Transfer_Type getTransferTypeWithTransferTypeId(@RequestBody Transfer transfer){
+        Transfer_Type transfer_type = transferDao.getTransferTypeWithTransferTypeId(transfer);
+
+        if(transfer_type == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user Not Found");
+        } else {
+            return transfer_type;
+        }
+    }
+    @RequestMapping(path = "/transfer_status", method = RequestMethod.POST)
+    public Transfer_status getTransferStatusWithTransferTypeId(@RequestBody Transfer transfer){
+        Transfer_status transfer_status = transferDao.getTransferStatusWithTransferTypeId(transfer);
+
+        if(transfer_status == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user Not Found");
+        } else {
+            return transfer_status;
         }
     }
 //    @RequestMapping(path = "/withdrawTransfer/{id}", method = RequestMethod.PUT)

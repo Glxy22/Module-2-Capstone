@@ -122,8 +122,8 @@ public class App {
                     System.out.println("Id: " + transfers[i].getTransfer_id());
                     System.out.println("From: " + userService.getUserById(currentUser, transfers[i].getAccount_from()));
                     System.out.println("To: " + userService.getUserById(currentUser, transfers[i].getAccount_to()));
-                    System.out.println("Type: " + transfers[i].getTransfer_type_id());
-                    System.out.println("Status: " + transfers[i].getTransfer_status_id());
+                    System.out.println("Type: " + transferService.getTransferTypeWithTransferTypeId(currentUser, transfers[i]).getTransfer_type_desc());
+                    System.out.println("Status: " + transferService.getTransferStatusWithTransferTypeId(currentUser, transfers[i]).getTransfer_status_desc());
                     System.out.println("Amount: " + transfers[i].getAmount());
                     System.out.println();
                 }
