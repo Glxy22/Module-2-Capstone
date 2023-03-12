@@ -79,10 +79,11 @@ public class Controller {
         transferDao.changeTransferStatus(transfer);
     }
 
-    @RequestMapping(path = "/user")
-    public User getUsernameById(){
-        User user = userDao.getUserByAccountId(2001);
+    @RequestMapping(path = "/user_account/{id}", method = RequestMethod.GET)
+    public User getUsernameById(@PathVariable int id){
+        User user = userDao.getUserByAccountId(id);
         if(user == null){
+
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user Not Found");
         } else {
         return user;
