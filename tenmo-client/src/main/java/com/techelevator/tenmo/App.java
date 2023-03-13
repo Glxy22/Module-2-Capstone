@@ -221,10 +221,10 @@ public class App {
         accountService.balanceAdjustmentAfterTransfer(currentUser,transfer);
         System.out.println("_________________________________________");
         System.out.println("Transfers");
-        System.out.println("ID"+"      "+"From/To"+"      "+"Amount");
+        System.out.println("ID"+"             "+"From/To"+"            "+"Amount");
         System.out.println("_________________________________________");
         System.out.println(currentUser.getUser().getId()+"         From: "+currentUser.getUser().getUsername().toUpperCase()+
-                "       "+accountService.getBalance(currentUser).getBalance());
+                "        "+accountService.getBalance(currentUser).getBalance());
         name_to=userService.getUserByAccountID(currentUser,account_to);
         System.out.println(name_to.getId()+"           To: "+name_to.getUsername().toUpperCase()+"         "
                 +accountService.getAccToByAccountID(currentUser,account_to).getBalance());
